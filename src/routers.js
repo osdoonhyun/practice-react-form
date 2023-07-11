@@ -4,10 +4,15 @@ import FindPassword from './pages/FindPassword';
 import SingUp from './pages/Signup';
 import ChangePassword from './pages/ChangePassword';
 import Login from './pages/Login';
+import Home from './pages/Home';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/login',
     element: <Login />,
   },
   {
