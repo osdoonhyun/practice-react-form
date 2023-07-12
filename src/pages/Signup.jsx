@@ -1,6 +1,6 @@
 import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { agreeList, emailList, mainAddress } from '../constants/constant';
@@ -278,6 +278,12 @@ export default function Signup() {
           </Button>
         </div>
       </Form>
+      <Form.Text className='m-3 d-flex justify-content-center'>
+        이미 아이디가 있으신가요?
+        <Link style={{ marginLeft: '10px' }} to={'/login'}>
+          로그인
+        </Link>
+      </Form.Text>
     </FormContainer>
   );
 }
