@@ -15,6 +15,7 @@ export default function ChangePassword() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [btnDisable, setBtnDisable] = useState(false);
+  const [emailBtnDisable, setEmailBtnDisable] = useState(false);
 
   const [verificationStatus, setVerificationStatus] = useState({
     pending: true,
@@ -25,6 +26,23 @@ export default function ChangePassword() {
   const [passwordToggle, setPasswordToggle] = useState(false);
 
   const searchParams = new URLSearchParams(location.search);
+
+  const handleVerificationEmail = async () => {
+    console.log('이메일체크++++++');
+    try {
+      const { data, status } = await axios.post(mainAddress + '/user/email', {
+        email,
+      });
+      console.log('이메일 가입 확인', data, status);
+
+      if (status === 201) {
+        setBtnDisable(true);
+        setEmailBtnDisable(false);
+      }
+    } catch (error) {
+      console.log('이메일 가입 확인 에러', error.message);
+    }
+  };
 
   const handleVerificationCode = async () => {
     setVerificationStatus((prevState) => ({
@@ -101,7 +119,7 @@ export default function ChangePassword() {
 
   useEffect(() => {
     if (email !== '') {
-      setBtnDisable(true);
+      setEmailBtnDisable(true);
     }
     if (token === '') {
       setToken(searchParams.get('token'));
@@ -129,6 +147,13 @@ export default function ChangePassword() {
                 </Form.Group>
               </Row>
             </Form.Group>
+
+            <Button
+              disabled={emailBtnDisable ? false : true}
+              onClick={handleVerificationEmail}
+            >
+              {btnDisable ? '가입 확인' : '확인'}
+            </Button>
 
             <Button
               onClick={handleVerificationCode}
